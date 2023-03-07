@@ -1,4 +1,5 @@
 #include <iostream>
+#include <Windows.h>
 
 using namespace std;
 
@@ -27,7 +28,6 @@ public:
 	};
 	~Backpack()
 	{
-		cout << max_weight << endl << weight << endl << loss_weight << endl;
 		cout << "~Backpack()" << endl;
 	};
 	void add_to_backpack(int weighttmp);
@@ -65,6 +65,7 @@ public:
 		this->pockets = pocketstmp;
 		this->max_weight = max_weighttmp;
 		loss_weight = (this->max_weight * pockets / 2) - weight;
+		cout << "MultiBackpack(int max_weighttmp, int weighttmp, int pocketstmp)" << endl;
 	};
 	MultiBackpack(const MultiBackpack& copybackpack)
 	{
@@ -72,6 +73,11 @@ public:
 		pockets = copybackpack.pockets;
 		max_weight = copybackpack.max_weight;
 		loss_weight = (this->max_weight * pockets / 2) - weight;
+		cout << "MultiBackpack(const MultiBackpack& copybackpack)" << endl;
+	};
+	~MultiBackpack()
+	{
+		cout << "~MultiBackpack()" << endl;
 	};
 	void set_pockets(int pocketstmp);
 protected:
@@ -123,8 +129,30 @@ protected:
 
 int main()
 {
+	setlocale(LC_ALL, "");
+	cout << "Создание обычного классов разными конструкторами" << endl;
+	Backpack* b = new Backpack;
+	Backpack* b1 = new Backpack(1000, 5);
+	Backpack* b2 = new Backpack(*b1);
+	system("pause");
+	system("cls");
+	cout << "Создание дочернего классов разными конструкторами" << endl;
+	MultiBackpack* mb = new MultiBackpack;
+	MultiBackpack* mb1 = new MultiBackpack(1000, 500, 20);
+	MultiBackpack* mb2 = new MultiBackpack(*mb1);
+	system("pause");
+	system("cls");
+	cout << "Создание классов разными конструкторами методом композиции" << endl;
 	Many_backpacks* a = new Many_backpacks;
 	Many_backpacks* a1 = new Many_backpacks(*a);
+	system("pause");
+	system("cls");
+	delete b;
+	delete b1;
+	delete b2;
+	delete mb;
+	delete mb1;
+	delete mb2;
 	delete a;
 	delete a1;
 	return 0;
